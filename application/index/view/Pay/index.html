@@ -1,0 +1,416 @@
+{extend name='IndexPublic/head' /}
+{block name='title'}结算页面{/block}
+{block name='lianjie'}
+<link href="/static/index/AmazeUI-2.4.2/assets/css/amazeui.css" rel="stylesheet" type="text/css" />
+<link href="/static/index/basic/css/demo.css" rel="stylesheet" type="text/css" />
+<link href="/static/index/css/cartstyle.css" rel="stylesheet" type="text/css" />
+<link href="/static/index/css/jsstyle.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="/static/index/js/address.js"></script>
+{/block}
+{block name='content'}
+<div class="concent">
+    <!--地址 -->
+    <div class="paycont">
+        <div class="address">
+            <h3>确认收货地址 </h3>
+            <div class="control">
+                <div class="tc-btn createAddr theme-login am-btn am-btn-danger">使用新地址</div>
+            </div>
+            <div class="clear"></div>
+            <ul>
+                {foreach name="address" item="row"}
+                <div class="per-border"></div>
+                <input type="hidden" name="id" class="aid" value="{$row['id']}">
+                <li class="user-addresslist">
+                    <div class="address-left">
+                        <div class="user DefaultAddr">
+                            <span class="buy-address-detail">
+                            <span class="buy-user">{$row['name']}</span>
+                            <span class="buy-phone">{$row['phone']}</span>
+                            </span>
+                        </div>
+                        <div class="default-address DefaultAddr">
+                            <span class="buy-line-title buy-line-title-type">收货地址：</span>
+                            <span class="buy--address-detail">
+                            <span class="province">{$row['sf']}</span>
+                            <span class="city">{$row['cs']}</span>
+                            <span class="dist">{$row['sq']}</span>
+                            <span class="street">{$row['adds']}</span>
+                            </span>
+                            
+                        </div>
+                        <!-- <ins class="deftip">默认地址</ins> -->
+                    </div>
+                    <div class="address-right">
+                        <a href="/static/index/person/address.html">
+                        <span class="am-icon-angle-right am-icon-lg">111111</span></a>
+                    </div>
+                    <div class="clear"></div>
+                    <div class="new-addr-btn">
+                        <a href="#" class="hidden">设为默认</a>
+                        <span class="new-addr-bar hidden">|</span>
+                        <a href="#">编辑</a>
+                        <span class="new-addr-bar">|</span>
+                        <a href="/pay/delete/id/{$row['id']}/cid/{$id}" >删除</a>
+                    </div>
+                </li>
+                {/foreach}
+            </ul>
+            <div class="clear"></div>
+        </div>
+        <script>
+           $(function(){
+                // 获取订单总计
+                    a=0;
+                $('.item-content').each(function(){
+                    b=$(this).find('em[name="zprice"]').html();
+                    zpr=parseFloat(b);
+                    a+=zpr;
+                })
+                // 合计赋值
+                $('.pay-sum').html(a);
+                // 实付款赋值
+                $('.style-large-bold-red ').html(a);
+                
+                // 获取第一个地址 默认选中
+                $('.user-addresslist').first().addClass('defaultAddr');
+                // 获取地址id
+                id=$('.defaultAddr').prev().val();
+                $.get('/pay/hqaddr',{id:id},function(data){
+                    $('.shenfen').html(data.sf);
+                    $('.chenshi').html(data.cs);
+                    $('.shiqu').html(data.sq);
+                    $('.xiangdi').html(data.adds);
+                    $('.xinming').html(data.name);
+                    $('.dianhua').html(data.phone);
+                },'json');
+                // 获取地址id
+                $('.btn-go').click(function(){
+                    // 获取地址id
+                    aid=$('.defaultAddr').prev().val();
+                    // 获取订单总金额
+                    total=$('.style-large-bold-red ').html();
+                    // 获取购物车id
+                    cid= $('.cid').val();
+                    // alert(cid);
+                    $(this).attr('href','/order/index/aid/'+aid+'/total/'+total+'/cid/'+cid);
+                    
+                })
+            })
+        </script>
+        <!--物流 -->
+        <div class="logistics">
+            <h3>选择物流方式</h3>
+            <ul class="op_express_delivery_hot">
+                <li data-value="yuantong" class="OP_LOG_BTN  "><i class="c-gap-right" style="background-position:0px -468px"></i>圆通<span></span></li>
+                <li data-value="shentong" class="OP_LOG_BTN  "><i class="c-gap-right" style="background-position:0px -1008px"></i>申通<span></span></li>
+                <li data-value="yunda" class="OP_LOG_BTN  "><i class="c-gap-right" style="background-position:0px -576px"></i>韵达<span></span></li>
+                <li data-value="zhongtong" class="OP_LOG_BTN op_express_delivery_hot_last "><i class="c-gap-right" style="background-position:0px -324px"></i>中通<span></span></li>
+                <li data-value="shunfeng" class="OP_LOG_BTN  op_express_delivery_hot_bottom"><i class="c-gap-right" style="background-position:0px -180px"></i>顺丰<span></span></li>
+            </ul>
+        </div>
+        <div class="clear"></div>
+        <!--支付方式-->
+        <div class="logistics">
+            <h3>选择支付方式</h3>
+            <ul class="pay-list">
+                <li class="pay card"><img src="/static/index/images/wangyin.jpg" />银联<span></span></li>
+                <li class="pay qq"><img src="/static/index/images/weizhifu.jpg" />微信<span></span></li>
+                <li class="pay taobao"><img src="/static/index/images/zhifubao.jpg" />支付宝<span></span></li>
+            </ul>
+        </div>
+        <div class="clear"></div>
+        <!--订单 -->
+        <div class="concent">
+            <div id="payTable">
+                <h3>确认订单信息</h3>
+                <div class="cart-table-th">
+                    <div class="wp">
+                        <div class="th th-item">
+                            <div class="td-inner">商品信息</div>
+                        </div>
+                        <div class="th th-price">
+                            <div class="td-inner">单价</div>
+                        </div>
+                        <div class="th th-amount">
+                            <div class="td-inner">数量</div>
+                        </div>
+                        <div class="th th-sum">
+                            <div class="td-inner">金额</div>
+                        </div>
+                        <div class="th th-oplist">
+                            <div class="td-inner">配送方式</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="clear"></div>
+                {foreach name="data" item="val"}
+                <tr class="item-list">
+                    <div class="bundle  bundle-last">
+                        <div class="bundle-main">
+                            <ul class="item-content clearfix">
+                                <div class="pay-phone">
+                                    <li class="td td-item">
+                                        <div class="item-pic">
+                                            <a href="#" class="J_MakePoint">
+                                            <img src="/uploads/{$val['pic']}" width='80' height="80" class="itempic J_ItemImg"></a>
+                                        </div>
+                                        <div class="item-info">
+                                            <div class="item-basic-info">
+                                                <a href="#" class="item-title J_MakePoint" data-point="tbcart.8.11">{$val['name']}</a>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="td td-info">
+                                        <div class="item-props">
+                                            <span class="sku-line">口味：{$val['kw']}</span>
+                                            <span class="sku-line">包装：{$val['bz']}</span>
+                                        </div>
+                                    </li>
+                                    <li class="td td-price">
+                                        <div class="item-price price-promo-promo">
+                                            <div class="price-content">
+                                                <em class="J_Price price-now">{$val['price']}</em>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </div>
+                                <li class="td td-amount">
+                                    <div class="amount-wrapper ">
+                                        <div class="item-amount ">
+                                            <span class="phone-title">购买数量</span>
+                                            <div class="sl">
+                                                <!-- <input class="min am-btn" name="" type="button" value="-" /> -->
+                                                <p>{$val['num']}</p>
+                                                <!-- <input class="add am-btn" name="" type="button" value="+" /> -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="td td-sum">
+                                    <div class="td-inner">
+                                        <em tabindex="0" name="zprice" class="J_ItemSum number">{$val['price']*$val['num']}</em>
+                                    </div>
+                                </li>
+                                <li class="td td-oplist">
+                                    <div class="td-inner">
+                                        <span class="phone-title">配送方式</span>
+                                        <div class="pay-logis">
+                                            免邮<b class="sys_item_freprice"></b>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                            <div class="clear"></div>
+                        </div>
+                </tr>
+                {/foreach}
+                <div class="clear"></div>
+            </div>
+            <!--  -->
+        </div>
+        <div class="clear"></div>
+        <div class="pay-total">
+            <!--留言-->
+            <div class="order-extra">
+                <div class="order-user-info">
+                    <div id="holyshit257" class="memo">
+                        <label>买家留言：</label>
+                        <input type="text" title="选填,对本次交易的说明（建议填写已经和卖家达成一致的说明）" placeholder="选填,建议填写和卖家达成一致的说明" class="memo-input J_MakePoint c2c-text-default memo-close">
+                        <input type="hidden" name='cid' value="{$id}" class="cid">
+                        
+                        <div class="msg hidden J-msg">
+                            <p class="error">最多输入500个字符</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--优惠券 -->
+            <div class="buy-agio">
+                <li class="td td-coupon">
+                    <span class="coupon-title">优惠券</span>
+                    <select data-am-selected>
+                        <option value="a">
+                            <div class="c-price">
+                                <strong>￥8</strong>
+                            </div>
+                            <div class="c-limit">
+                                【消费满95元可用】
+                            </div>
+                        </option>
+                        <option value="b" selected>
+                            <div class="c-price">
+                                <strong>￥3</strong>
+                            </div>
+                            <div class="c-limit">
+                                【无使用门槛】
+                            </div>
+                        </option>
+                    </select>
+                </li>
+                <li class="td td-bonus">
+                    <span class="bonus-title">红包</span>
+                    <select data-am-selected>
+                        <option value="a">
+                            <div class="item-info">
+                                ¥50.00<span>元</span>
+                            </div>
+                            <div class="item-remainderprice">
+                                <span>还剩</span>10.40<span>元</span>
+                            </div>
+                        </option>
+                        <option value="b" selected>
+                            <div class="item-info">
+                                ¥50.00<span>元</span>
+                            </div>
+                            <div class="item-remainderprice">
+                                <span>还剩</span>50.00<span>元</span>
+                            </div>
+                        </option>
+                    </select>
+                </li>
+            </div>
+            <div class="clear"></div>
+        </div>
+        <!--含运费小计 -->
+        <div class="buy-point-discharge ">
+            <p class="price g_price ">
+                合计（含运费） <span>¥</span><em class="pay-sum">244.00</em>
+            </p>
+        </div>
+        <!--信息 -->
+        <div class="order-go clearfix">
+            <div class="pay-confirm clearfix">
+                <div class="box">
+                    <div tabindex="0" id="holyshit267" class="realPay"><em class="t">实付款：</em>
+                        <span class="price g_price ">
+                                    <span>¥</span> <em class="style-large-bold-red " id="J_ActualFee">244.00</em>
+                        </span>
+                    </div>
+                    <div id="holyshit268" class="pay-address">
+                        <p class="buy-footer-address">
+                            <span class="buy-line-title buy-line-title-type">寄送至：</span>
+                            <span class="buy--address-detail">
+                            <span class="province shenfen"></span>
+                            <span class="city chenshi"></span>
+                            <span class="dist shiqu"></span>
+                            <span class="street xiangdi"></span>
+                            </span>
+                            
+                        </p>
+                        <p class="buy-footer-address">
+                            <span class="buy-line-title">收货人：</span>
+                            <span class="buy-address-detail">
+                            <span class="buy-user xinming"></span>
+                            <span class="buy-phone dianhua"></span>
+                            </span>
+                        </p>
+                    </div>
+                </div>
+                <div id="holyshit269" class="submitOrder">
+                    <div class="go-btn-wrap">
+                        <a id="J_Go" href="javascript:void(0);" class="btn-go"  tabindex="0" title="点击此按钮，提交订单">提交订单</a>
+                    </div>
+                </div>
+                <div class="clear"></div>
+            </div>
+        </div>
+    </div>
+    <div class="clear"></div>
+</div>
+</div>
+
+<div class="footer">
+    <div class="footer-hd">
+        <p>
+            <a href="#">恒望科技</a>
+            <b>|</b>
+            <a href="#">商城首页</a>
+            <b>|</b>
+            <a href="#">支付宝</a>
+            <b>|</b>
+            <a href="#">物流</a>
+        </p>
+    </div>
+</div>
+</div>
+<div class="theme-popover-mask"></div>
+<div class="theme-popover">
+    <!--标题 -->
+    <div class="am-cf am-padding">
+        <div class="am-fl am-cf"><strong class="am-text-danger am-text-lg">新增地址</strong> / <small>Add address</small></div>
+    </div>
+    <hr />
+    <div class="am-u-md-12">
+        <form class="am-form am-form-horizontal">
+            <div class="am-form-group">
+                <label for="user-name" class="am-form-label">收货人</label>
+                <div class="am-form-content">
+                    <input type="text" id="user-name" name="username" value="" required="required" placeholder="收货人">
+                </div>
+            </div>
+            <div class="am-form-group">
+                <label for="user-phone" class="am-form-label">手机号码</label>
+                <div class="am-form-content">
+                    <input id="user-phone" name="phone" value="" required="required" placeholder="手机号必填" type="email">
+                </div>
+            </div>
+            <div class="am-form-group">
+                <label for="user-phone" class="am-form-label">所在地</label>
+                <div class="am-form-content address">
+                    <select data-am-selected name="sf" required="required">
+                        <option value="浙江省">浙江省</option>
+                        <option value="四川省">四川省</option>
+                    </select>
+                    <select data-am-selected name="cs" required="required">
+                        <option value="温州市">温州市</option>
+                        <option value="成都市">成都市</option>
+                    </select>
+                    <select data-am-selected name="sq" required="required">
+                        <option value="瑞安区">瑞安区</option>
+                        <option value="武侯区">武侯区</option>
+                    </select>
+                </div>
+            </div>
+            <div class="am-form-group">
+                <label for="user-intro" class="am-form-label">详细地址</label>
+                <div class="am-form-content">
+                    <textarea class="" rows="3" id="user-intro" required="required" name="xd" placeholder="输入详细地址"></textarea>
+                    <small>100字以内写出你的详细地址</small>
+                </div>
+            </div>
+            <div class="am-form-group theme-poptit">
+                <div class="am-u-sm-9 am-u-sm-push-3">
+                    <div class="am-btn am-btn-danger baocun close">保存</div>
+                    <div class="am-btn am-btn-danger close">取消</div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="clear"></div>
+</body>
+    <script>
+        $(function(){
+            $('.baocun').click(function(){
+                name=$('#user-name').val();
+                phone=$('#user-phone').val();
+                sf=$('select[name=sf]').val();
+                cs=$('select[name=cs]').val();
+                sq=$('select[name=sq]').val();
+                adds=$('textarea[name=xd]').val();
+                id=$('.cid').val();
+                
+                // Ajax
+                $.get('/pay/adds',{name:name,phone:phone,sf:sf,cs:cs,sq:sq,adds:adds},function(data){
+                        if (data==1) {
+                            window.location.href='/pay/index/id/'+id;
+                        }
+                })
+                
+            })
+        })
+    </script>
+
+</html>
+{/block}

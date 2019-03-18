@@ -1,0 +1,660 @@
+{extend name='IndexPublic/head' /}
+{block name='title'}首页{/block}
+{block name='lianjie'}
+    <link href="/static/index/AmazeUI-2.4.2/assets/css/amazeui.css" rel="stylesheet" type="text/css" />
+    <link href="/static/index/AmazeUI-2.4.2/assets/css/admin.css" rel="stylesheet" type="text/css" />
+    <link href="/static/index/basic/css/demo.css" rel="stylesheet" type="text/css" />
+    <link href="/static/index/css/hmstyle.css" rel="stylesheet" type="text/css" />
+    <script src="/static/index/AmazeUI-2.4.2/assets/js/jquery.min.js"></script>
+    <script src="/static/index/AmazeUI-2.4.2/assets/js/amazeui.min.js"></script>   
+{/block}
+{block name='content'}
+<b class="line"></b>
+<div class="shopNav">
+    <div class="slideall" style="height: auto;">
+        <div class="long-title"><span class="all-goods">全部分类</span></div>
+        <div class="nav-cont">
+            <ul>
+                <li class="/indexhome/index"><a href="#">首页</a></li>
+            {foreach name='dht' item='val'}
+                <li class="qc"><a href="{$val['url']}">{$val['name']}</a></li>
+            {/foreach}
+            </ul>
+            <div class="nav-extra">
+                <i class="am-icon-user-secret am-icon-md nav-user"></i><b></b>我的福利
+                <i class="am-icon-angle-right" style="padding-left: 10px;"></i>
+            </div>
+        </div>
+        <div class="bannerTwo">
+            <!--轮播 -->
+            <div class="am-slider am-slider-default scoll" data-am-flexslider id="demo-slider-0">
+                <ul class="am-slides">
+                {foreach name='lbt' item='value'}
+                    <li class="banner1"><a href="{$value['url']}"><img src="/uploads/{$value['pic']}" /></a></li>
+                {/foreach}
+                </ul>
+            </div>
+            <div class="clear"></div>
+        </div>
+        <!--侧边导航 -->
+        <div id="nav" class="navfull" style="position: static;">
+            <div class="area clearfix">
+                <div class="category-content" id="guide_2">
+                    <div class="category" style="box-shadow:none ;margin-top: 2px;">
+                        <ul class="category-list navTwo" id="js_climit_li">
+                            {foreach name="cate" item="row"}
+                            <li>
+                                <div class="category-info">
+                                    <h3 class="category-name b-category-name"><i><img src="/static/index/images/cake.png"></i><a class="ml-22" title="点心">{$row['name']}</a></h3>
+                                    <em>&gt;</em>
+                                </div>
+                                <div class="menu-item menu-in top">
+                                    <div class="area-in">
+                                        <div class="area-bg">
+                                            <div class="menu-srot">
+                                                <div class="sort-side">
+                                                    {if condition="$row['shop']"}                                   
+                                                        {foreach name="row['shop']" item="rows"}
+                                                        <dl class="dl-sort">
+                                                        <dt><span title="蛋糕">{$rows['name']}</span></dt>
+                                                            {if condition="$rows['shop']"}
+                                                               {foreach name="rows['shop']" item="rowss"} 
+                                                            <dd><a title="蒸蛋糕" href="/a/id/{$rowss['id']}"><span>{$rowss['name']}</span></a></dd>
+                                                                {/foreach}
+                                                            {/if}
+                                                        </dl>
+                                                        {/foreach}
+                                                    {/if}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <b class="arrow"></b>
+                            </li>
+                            {/foreach}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--导航 -->
+        <script type="text/javascript">
+        (function() {
+            $('.am-slider').flexslider();
+        });
+        $(document).ready(function() {
+            $("li").hover(function() {
+                $(".category-content .category-list li.first .menu-in").css("display", "none");
+                $(".category-content .category-list li.first").removeClass("hover");
+                $(this).addClass("hover");
+                $(this).children("div.menu-in").css("display", "block")
+            }, function() {
+                $(this).removeClass("hover")
+                $(this).children("div.menu-in").css("display", "none")
+            });
+        })
+        </script>
+  
+        <div class="clear"></div>
+        <!--走马灯 -->
+        <div class="marqueenTwo">
+            <span class="marqueen-title"><i class="am-icon-volume-up am-icon-fw"></i>商城头条<em class="am-icon-angle-double-right"></em></span>
+            <div class="demo">
+                <ul>
+                    <li class="title-first"><a target="_blank" href="#">
+                                    <img src="/static/index/images/TJ2.jpg"></img>
+                                    <span>[特惠]</span>洋河年末大促，低至两件五折                          
+                                </a></li>
+                    <li class="title-first"><a target="_blank" href="#">
+                                    <span>[公告]</span>商城与广州市签署战略合作协议
+                                     <img src="/static/index/images/TJ.jpg"></img>
+                                     <p>XXXXXXXXXXXXXXXXXX</p>
+                                </a></li>
+                    <li><a target="_blank" href="#"><span>[特惠]</span>女生节商城爆品1分秒 </a></li>
+                    <li><a target="_blank" href="#"><span>[公告]</span>华北、华中部分地区配送延迟</a></li>
+                    <li><a target="_blank" href="#"><span>[特惠]</span>家电狂欢千亿礼券 买1送1！</a></li>
+                    <li><a target="_blank" href="#"><span>[特惠]</span>洋河年末大促，低至两件五折</a></li>
+                    <li><a target="_blank" href="#"><span>[公告]</span>华北、华中部分地区配送延迟</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <script type="text/javascript">
+    if ($(window).width() < 640) {
+        function autoScroll(obj) {
+            $(obj).find("ul").animate({
+                marginTop: "-39px"
+            }, 500, function() {
+                $(this).css({
+                    marginTop: "0px"
+                }).find("li:first").appendTo(this);
+            })
+        }
+        $(function() {
+            setInterval('autoScroll(".demo")', 3000);
+        })
+    }
+    </script>
+</div>
+<div class="shopMainbg">
+    <div class="shopMain" id="shopmain">
+        <!--今日推荐 -->
+        <div class="am-g am-g-fixed recommendation">
+            <div class="clock am-u-sm-3" ">
+                            <img src="/static/index/images/2016.png "></img>
+                            <p>今日<br>推荐</p>
+                        </div>
+                        <div class=" am-u-sm-4 am-u-lg-3 ">
+                            <div class=" info ">
+                                <h3>真的有鱼</h3>
+                                <h4>开年福利篇</h4>
+                            </div>
+                            <div class=" recommendationMain one">
+                <a href="introduction.html"><img src="/static/index/images/tj.png "></img></a>
+            </div>
+        </div>
+        <div class="am-u-sm-4 am-u-lg-3 ">
+            <div class="info ">
+                <h3>囤货过冬</h3>
+                <h4>让爱早回家</h4>
+            </div>
+            <div class="recommendationMain two">
+                <img src="/static/index/images/tj1.png "></img>
+            </div>
+        </div>
+        <div class="am-u-sm-4 am-u-lg-3 ">
+            <div class="info ">
+                <h3>浪漫情人节</h3>
+                <h4>甜甜蜜蜜</h4>
+            </div>
+            <div class="recommendationMain three">
+                <img src="/static/index/images/tj2.png "></img>
+            </div>
+        </div>
+    </div>
+    <div class="clear "></div>
+    <!--热门活动 -->
+    <div class="am-container activity ">
+        <div class="shopTitle ">
+            <h4>活动</h4>
+            <h3>每期活动 优惠享不停 </h3>
+            <span class="more ">
+                              <a href="# ">全部活动<i class="am-icon-angle-right" style="padding-left:10px ;" ></i></a>
+                        </span>
+        </div>
+        <div class="am-g am-g-fixed ">
+            <div class="am-u-sm-3 ">
+                <div class="icon-sale one "></div>
+                <h4>秒杀</h4>
+                <div class="activityMain ">
+                    <img src="/static/index/images/activity1.jpg "></img>
+                </div>
+                <div class="info ">
+                    <h3>春节送礼优选</h3>
+                </div>
+            </div>
+            <div class="am-u-sm-3 ">
+                <div class="icon-sale two "></div>
+                <h4>特惠</h4>
+                <div class="activityMain ">
+                    <img src="/static/index/images/activity2.jpg "></img>
+                </div>
+                <div class="info ">
+                    <h3>春节送礼优选</h3>
+                </div>
+            </div>
+            <div class="am-u-sm-3 ">
+                <div class="icon-sale three "></div>
+                <h4>团购</h4>
+                <div class="activityMain ">
+                    <img src="/static/index/images/activity3.jpg "></img>
+                </div>
+                <div class="info ">
+                    <h3>春节送礼优选</h3>
+                </div>
+            </div>
+            <div class="am-u-sm-3 last ">
+                <div class="icon-sale "></div>
+                <h4>超值</h4>
+                <div class="activityMain ">
+                    <img src="/static/index/images/activity.jpg "></img>
+                </div>
+                <div class="info ">
+                    <h3>春节送礼优选</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="clear "></div>
+    <div id="f1">
+        <!--甜点-->
+        <div class="am-container ">
+            <div class="shopTitle ">
+                <h4>甜品</h4>
+                <h3>每一道甜品都有一个故事</h3>
+                <div class="today-brands ">
+                    <a href="# ">桂花糕</a>
+                    <a href="# ">奶皮酥</a>
+                    <a href="# ">栗子糕 </a>
+                    <a href="# ">马卡龙</a>
+                    <a href="# ">铜锣烧</a>
+                    <a href="# ">豌豆黄</a>
+                </div>
+                <span class="more ">
+                    <a href="# ">更多美味<i class="am-icon-angle-right" style="padding-left:10px ;" ></i></a>
+                        </span>
+            </div>
+        </div>
+        <div class="am-g am-g-fixed floodFour">
+            <div class="am-u-sm-5 am-u-md-4 text-one list ">
+                <div class="outer-con ">
+                    <div class="title ">
+                    开抢啦！
+                    </div>
+                    <div class="sub-title ">
+                        零食大礼包
+                    </div>                                  
+                </div>
+                <img src="/static/index/images/act1.png " />                             
+                <div class="triangle-topright"></div>
+            </div>
+            {foreach name='tp' item='val'}
+            <div class="am-u-sm-7 am-u-md-4 text-two">
+                <div class="outer-con ">
+                    <div class="title ">
+                        {$val['goodsname']}
+                    </div>
+                    <div class="sub-title ">
+                        ￥{$val['price']}
+                    </div>
+                    <i class="am-icon-shopping-basket am-icon-md  seprate"></i>
+                </div>
+                <a href="/goods/index/id/{$val['id']}"><img src="/uploads/{$val['pic']}" /></a>
+            </div>
+            {/foreach}
+            <!-- <div class="am-u-sm-7 am-u-md-4 text-two">
+                <div class="outer-con ">
+                    <div class="title ">
+                        雪之恋和风大福22
+                    </div>
+                    <div class="sub-title ">
+                        ¥13.8
+                    </div>
+                    <i class="am-icon-shopping-basket am-icon-md  seprate"></i>
+                </div>
+                <a href="# "><img src="/static/index/images/1.jpg" /></a>
+            </div>
+            <div class="am-u-sm-3 am-u-md-2 text-two ">
+                <div class="outer-con ">
+                    <div class="title ">
+                        小优布丁33
+                    </div>
+                    <div class="sub-title ">
+                        ¥4.8
+                    </div>
+                    <i class="am-icon-shopping-basket am-icon-md  seprate"></i>
+                </div>
+                <a href="# "><img src="/static/index/images/5.jpg" /></a>
+            </div>
+             <div class="am-u-sm-3 am-u-md-2 text-two ">
+                <div class="outer-con ">
+                    <div class="title ">
+                        小优布丁44
+                    </div>
+                    <div class="sub-title ">
+                        ¥4.8
+                    </div>
+                    <i class="am-icon-shopping-basket am-icon-md  seprate"></i>
+                </div>
+                <a href="# "><img src="/static/index/images/5.jpg" /></a>
+            </div>
+            <div class="am-u-sm-3 am-u-md-2 text-two">
+                <div class="outer-con ">
+                    <div class="title ">
+                        小优布丁55
+                    </div>
+                    <div class="sub-title ">
+                        ¥4.8
+                    </div>
+                    <i class="am-icon-shopping-basket am-icon-md  seprate"></i>
+                </div>
+                <a href="# "><img src="/static/index/images/3.jpg" /></a>
+            </div>
+            <div class="am-u-sm-3 am-u-md-2 text-two ">
+                <div class="outer-con ">
+                    <div class="title ">
+                        小优布丁66
+                    </div>
+                    <div class="sub-title ">
+                        ¥4.8
+                    </div>
+                    <i class="am-icon-shopping-basket am-icon-md  seprate"></i>
+                </div>
+                <a href="# "><img src="/static/index/images/4.jpg" /></a>
+            </div>
+            <div class="am-u-sm-3 am-u-md-2 text-two ">
+                <div class="outer-con ">
+                    <div class="title ">
+                        小优布丁77
+                    </div>
+                    <div class="sub-title ">
+                        ¥4.8
+                    </div>
+                    <i class="am-icon-shopping-basket am-icon-md  seprate"></i>
+                </div>
+                <a href="# "><img src="/static/index/images/4.jpg" /></a>
+            </div>
+            <div class="am-u-sm-3 am-u-md-2 text-two">
+                <div class="outer-con ">
+                    <div class="title ">
+                        小优布丁88
+                    </div>
+                    <div class="sub-title ">
+                        ¥4.8
+                    </div>
+                    <i class="am-icon-shopping-basket am-icon-md  seprate"></i>
+                </div>
+                <a href="# "><img src="/static/index/images/5.jpg" /></a>
+            </div> -->
+        </div>
+        <div class="clear "></div>
+    </div>
+    <div id="f2">
+        <!--坚果-->
+        <div class="am-container ">
+            <div class="shopTitle ">
+                <h4>坚果</h4>
+                <h3>酥酥脆脆，回味无穷</h3>
+                <div class="today-brands ">
+                    <a href="# ">腰果</a>
+                    <a href="# ">松子</a>
+                    <a href="# ">夏威夷果 </a>
+                    <a href="# ">碧根果</a>
+                    <a href="# ">开心果</a>
+                    <a href="# ">核桃仁</a>
+                </div>
+                <span class="more ">
+                    <a href="# ">更多美味<i class="am-icon-angle-right" style="padding-left:10px ;" ></i></a>
+                        </span>
+            </div>
+        </div>
+        <div class="am-g am-g-fixed floodThree ">
+            <div class="am-u-sm-4 text-four list">
+                    <img src="/static/index/images/act1.png " />
+                    <div class="outer-con ">
+                        <div class="title ">
+                            坚果
+                        </div>                                  
+                    </div>
+                <div class="triangle-topright"></div>
+            </div>
+            {foreach name='jg' item='row'}
+            <div class="am-u-sm-4 text-four">
+                <a href="/goods/index/id/{$row['id']}">
+                    <img width='150' src="/uploads/{$row['pic']}" />
+                    <div class="outer-con ">
+                        <div class="title ">
+                            {$row['goodsname']}
+                        </div>                              
+                        <div class="sub-title ">
+                            ¥{$row['price']}
+                        </div>
+                        <i class="am-icon-shopping-basket am-icon-md  seprate"></i>
+                    </div>
+                </a>
+            </div>
+            {/foreach}
+            <!-- <div class="am-u-sm-4 text-four sug">
+                <a href="# ">
+                                <img src="/static/index/images/7.jpg" />
+                                <div class="outer-con ">
+                                    <div class="title ">
+                                        雪之恋和风大福
+                                    </div>
+                                    <div class="sub-title ">
+                                        ¥13.8
+                                    </div>
+                                    <i class="am-icon-shopping-basket am-icon-md  seprate"></i>
+                                </div>
+                            </a>
+            </div>
+            <div class="am-u-sm-6 am-u-md-3 text-five big ">
+                <a href="# ">
+                                <img src="/static/index/images/10.jpg" />
+                                <div class="outer-con ">
+                                    <div class="title ">
+                                        雪之恋和风大福
+                                    </div>      
+                                    <div class="sub-title ">
+                                        ¥13.8
+                                    </div>
+                                    <i class="am-icon-shopping-basket am-icon-md  seprate"></i>
+                                </div>
+                            </a>
+            </div>
+            <div class="am-u-sm-6 am-u-md-3 text-five ">
+                <a href="# ">
+                                <img src="/static/index/images/8.jpg" />
+                                <div class="outer-con ">
+                                    <div class="title ">
+                                        雪之恋和风大福
+                                    </div>  
+                                    <div class="sub-title ">
+                                        ¥13.8
+                                    </div>
+                                    <i class="am-icon-shopping-basket am-icon-md  seprate"></i>
+                                </div>
+                            </a>
+            </div>
+            <div class="am-u-sm-6 am-u-md-3 text-five sug">
+                <a href="# ">
+                                <img src="/static/index/images/9.jpg" />
+                                <div class="outer-con ">
+                                    <div class="title ">
+                                        雪之恋和风大福
+                                    </div>
+                                    <div class="sub-title ">
+                                        ¥13.8
+                                    </div>
+                                    <i class="am-icon-shopping-basket am-icon-md  seprate"></i>
+                                </div>
+                            </a>
+            </div>
+            <div class="am-u-sm-6 am-u-md-3 text-five big">
+                <a href="# ">
+                                <img src="/static/index/images/10.jpg" />
+                                <div class="outer-con ">
+                                    <div class="title ">
+                                        雪之恋和风大福
+                                    </div>          
+                                    <div class="sub-title ">
+                                        ¥13.8
+                                    </div>
+                                    <i class="am-icon-shopping-basket am-icon-md  seprate"></i>
+                                </div>
+                            </a>
+            </div> -->
+        </div>
+        <div class="clear "></div>
+    </div>
+    <div class="footer ">
+        <div class="footer-hd ">
+            <p>
+                <a href="# ">恒望科技</a>
+                <b>|</b>
+                <a href="/indexhome/index">商城首页</a>
+                <b>|</b>
+                <a href="# ">支付宝</a>
+                <b>|</b>
+                <a href="# ">物流</a>
+            </p>
+        </div>
+    </div>
+</div>
+</div>
+<!--引导 -->
+<div class="navCir">
+    <li class="active"><a href="home.html"><i class="am-icon-home "></i>首页</a></li>
+    <li><a href="sort.html"><i class="am-icon-list"></i>分类</a></li>
+    <li><a href="shopcart.html"><i class="am-icon-shopping-basket"></i>购物车</a></li>
+    <li><a href="/static/index/person/index.html"><i class="am-icon-user"></i>我的</a></li>
+</div>
+<!--菜单 -->
+<div class=tip>
+    <div id="sidebar">
+        <div id="wrap">
+            <div id="prof" class="item ">
+                <a href="# ">
+                            <span class="setting "></span>
+                        </a>
+                <div class="ibar_login_box status_login ">
+                    <div class="avatar_box ">
+                        <p class="avatar_imgbox "><img src="/static/index/images/no-img_mid_.jpg " /></p>
+                            <ul class="user_info ">
+                                <li>用户名sl1903</li>
+                                <li>级&nbsp;别普通会员</li>
+                            </ul>
+                    </div>
+                    <div class="login_btnbox ">
+                        <a href="# " class="login_order ">我的订单</a>
+                        <a href="# " class="login_favorite ">我的收藏</a>
+                    </div>
+                    <i class="icon_arrow_white "></i>
+                </div>
+            </div>
+            <div id="shopCart " class="item ">
+                <a href="# ">
+                            <span class="message "></span>
+                        </a>
+                <p>
+                    购物车
+                </p>
+                <p class="cart_num ">0</p>
+            </div>
+            <div id="asset " class="item ">
+                <a href="# ">
+                            <span class="view "></span>
+                        </a>
+                <div class="mp_tooltip ">
+                    我的资产
+                    <i class="icon_arrow_right_black "></i>
+                </div>
+            </div>
+            <div id="foot " class="item ">
+                <a href="# ">
+                            <span class="zuji "></span>
+                        </a>
+                <div class="mp_tooltip ">
+                    我的足迹
+                    <i class="icon_arrow_right_black "></i>
+                </div>
+            </div>
+            <div id="brand " class="item ">
+                <a href="#">
+                            <span class="wdsc "><img src="/static/index/images/wdsc.png " /></span>
+                        </a>
+                <div class="mp_tooltip ">
+                    我的收藏
+                    <i class="icon_arrow_right_black "></i>
+                </div>
+            </div>
+            <div id="broadcast " class="item ">
+                <a href="# ">
+                            <span class="chongzhi "><img src="/static/index/images/chongzhi.png " /></span>
+                        </a>
+                <div class="mp_tooltip ">
+                    我要充值
+                    <i class="icon_arrow_right_black "></i>
+                </div>
+            </div>
+            <div class="quick_toggle ">
+                <li class="qtitem ">
+                    <a href="# "><span class="kfzx "></span></a>
+                    <div class="mp_tooltip ">客服中心<i class="icon_arrow_right_black "></i></div>
+                </li>
+                <!--二维码 -->
+                <li class="qtitem ">
+                    <a href="#none "><span class="mpbtn_qrcode "></span></a>
+                    <div class="mp_qrcode " style="display:none; "><img src="/static/index/images/weixin_code_145.png " /><i class="icon_arrow_white "></i></div>
+                </li>
+                <li class="qtitem ">
+                    <a href="#top " class="return_top "><span class="top "></span></a>
+                </li>
+            </div>
+            <!--回到顶部 -->
+            <div id="quick_links_pop " class="quick_links_pop hide "></div>
+        </div>
+    </div>
+    <div id="prof-content " class="nav-content ">
+        <div class="nav-con-close ">
+            <i class="am-icon-angle-right am-icon-fw "></i>
+        </div>
+        <div>
+            我
+        </div>
+    </div>
+    <div id="shopCart-content " class="nav-content ">
+        <div class="nav-con-close ">
+            <i class="am-icon-angle-right am-icon-fw "></i>
+        </div>
+        <div>
+            购物车
+        </div>
+    </div>
+    <div id="asset-content " class="nav-content ">
+        <div class="nav-con-close ">
+            <i class="am-icon-angle-right am-icon-fw "></i>
+        </div>
+        <div>
+            资产
+        </div>
+        <div class="ia-head-list ">
+            <a href="# " target="_blank " class="pl ">
+                        <div class="num ">0</div>
+                        <div class="text ">优惠券</div>
+                    </a>
+            <a href="# " target="_blank " class="pl ">
+                        <div class="num ">0</div>
+                        <div class="text ">红包</div>
+                    </a>
+            <a href="# " target="_blank " class="pl money ">
+                        <div class="num ">￥0</div>
+                        <div class="text ">余额</div>
+                    </a>
+        </div>
+    </div>
+    <div id="foot-content " class="nav-content ">
+        <div class="nav-con-close ">
+            <i class="am-icon-angle-right am-icon-fw "></i>
+        </div>
+        <div>
+            足迹
+        </div>
+    </div>
+    <div id="brand-content " class="nav-content ">
+        <div class="nav-con-close ">
+            <i class="am-icon-angle-right am-icon-fw "></i>
+        </div>
+        <div>
+            收藏
+        </div>
+    </div>
+    <div id="broadcast-content " class="nav-content ">
+        <div class="nav-con-close ">
+            <i class="am-icon-angle-right am-icon-fw "></i>
+        </div>
+        <div>
+            充值
+        </div>
+    </div>
+</div>
+<script>
+window.jQuery || document.write('<script src="basic/js/jquery.min.js "><\/script>');
+</script>
+<script type="text/javascript " src="/static/index/basic/js/quick_links.js "></script>
+</body>
+
+</html>
+{/block}

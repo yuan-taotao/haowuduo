@@ -1,0 +1,372 @@
+{extend name='IndexPublic/head' /}
+{block name='title'}购物车{/block}
+{block name='lianjie'}
+<link href="/static/index/AmazeUI-2.4.2/assets/css/amazeui.css" rel="stylesheet" type="text/css" />
+<link href="/static/index/basic/css/demo.css" rel="stylesheet" type="text/css" />
+<link href="/static/index/css/cartstyle.css" rel="stylesheet" type="text/css" />
+<link href="/static/index/css/optstyle.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="/static/index/js/jquery.js"></script>
+{/block}
+{block name='content'}
+<!--购物车 -->
+<div class="concent">
+    <div id="cartTable">
+        <div class="cart-table-th">
+            <div class="wp">
+                <div class="th th-chk">
+                    <div id="J_SelectAll1" class="select-all J_SelectAll">
+                    </div>
+                </div>
+                <div class="th th-item">
+                    <div class="td-inner">商品信息</div>
+                </div>
+                <div class="th th-price">
+                    <div class="td-inner">单价</div>
+                </div>
+                <div class="th th-amount">
+                    <div class="td-inner">数量</div>
+                </div>
+                <div class="th th-sum">
+                    <div class="td-inner">金额</div>
+                </div>
+                <div class="th th-op">
+                    <div class="td-inner">操作</div>
+                </div>
+            </div>
+        </div>
+        <div class="clear"></div>
+        <tr class="item-list">
+            <div class="bundle  bundle-last ">
+                <!-- <div class="bundle-hd">
+                    <div class="bd-promos">
+                        <div class="bd-has-promo">已享优惠:<span class="bd-has-promo-content">省￥19.50</span>&nbsp;&nbsp;</div>
+                        <div class="act-promo">
+                            <a href="#" target="_blank">第二支半价，第三支免费<span class="gt">&gt;&gt;</span></a>
+                        </div>
+                        <span class="list-change theme-login">编辑</span>
+                    </div>
+                </div> -->
+                <div class="clear"></div>
+                <div class="bundle-main">
+                {foreach name='cart' item='val'}
+                    <ul class="item-content clearfix">
+                        <li class="td td-chk">
+                            <div class="cart-checkbox ">
+                                <input class="check" id="J_CheckBox_170037950254" name="{$val['gid']}" value="{$val['id']}" type="checkbox">
+                                <label for="J_CheckBox_170037950254"></label>
+                            </div>
+                        </li>
+                        <li class="td td-item">
+                            <div class="item-pic">
+                                <a href="#" target="_blank" data-title="美康粉黛醉美东方唇膏口红正品 持久保湿滋润防水不掉色护唇彩妆" class="J_MakePoint" data-point="tbcart.8.12">
+                                <img src="/uploads/{$val['pic']}" width='78' height="78" class="itempic J_ItemImg"></a>
+                            </div>
+                            <div class="item-info">
+                                <div class="item-basic-info">
+                                    <a href="#" target="_blank" title="美康粉黛醉美唇膏 持久保湿滋润防水不掉色" class="item-title J_MakePoint" data-point="tbcart.8.11">{$val['name']}</a>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="td td-info">
+                            <div class="item-props item-props-can">
+                                <span class="sku-line">口味；{$val['kw']}</span>
+                                <span class="sku-line">包装：{$val['bz']}</span>
+                                <span tabindex="0" class="btn-edit-sku theme-login">修改</span>
+                                <i class="theme-login am-icon-sort-desc"></i>
+                            </div>
+                        </li>
+                        <li class="td td-price">
+                            <div class="item-price price-promo-promo">
+                                <div class="price-content">
+                                    <div class="price-line">
+                                        <em class="price-original">{$val['price']/0.6}</em>
+                                    </div>
+                                    <div class="price-line">
+                                        <em class="J_Price price-now" tabindex="0">{$val['price']}</em>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="td td-amount">
+                            <div class="amount-wrapper ">
+                                <div class="item-amount ">
+                                    <div class="sl">
+                                        <input class="updatee am-btn" name="{$val['id']}" type="button" value="-" />
+                                        <input class="text_box" name="num" type="text" value="{$val['num']}" style="width:30px;" />
+                                        <input class="update am-btn" name="{$val['id']}" type="button" value="+" />
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="td td-sum">
+                            <div class="td-inner">
+                                <em tabindex="0" name='zprice' class="J_ItemSum number">{$val['num']*$val['price']}</em>
+                            </div>
+                        </li>
+                        <li class="td td-op">
+                            <div class="td-inner">
+                                <!-- <a title="移入收藏夹" class="btn-fav" href="#">移入收藏夹</a> -->
+                                <a href="/cart/delete/id/{$val['id']}" data-point-url="#" class="delete">删除</a>
+                            </div>
+                        </li>
+                    </ul>
+                {/foreach}
+                </div>
+            </div>
+        </tr>
+    </div>
+    <div class="clear"></div>
+    <div class="float-bar-wrapper">
+        <div id="J_SelectAll2" class="select-all J_SelectAll">
+            <div class="cart-checkbox">
+                <input class="check-all check" id="J_SelectAllCbx2" name="select-all" value="true" type="checkbox">
+                <label for="J_SelectAllCbx2"></label>
+            </div>
+            <span>全选</span>
+        </div>
+        <div class="operations">
+            <a href="javascript:void(0);" hidefocus="true" class="deleteAll">删除</a>
+            <!-- <a href="#" hidefocus="true" class="J_BatchFav">移入收藏夹</a> -->
+        </div>
+        <div class="float-bar-right">
+            <div class="amount-sum">
+                <span class="txt">已选商品</span>
+                <em id="J_SelectedItemsCount" class="zj">0</em><span class="txt">件</span>
+                <div class="arrow-box">
+                    <span class="selected-items-arrow"></span>
+                    <span class="arrow"></span>
+                </div>
+            </div>
+            <div class="price-sum">
+                <span class="txt">合计:</span>
+                <strong class="price">¥<em id="J_Total" class="zpr">0.00</em></strong>
+            </div>
+            <div class="btn-area">
+                <a href="javascript:void(0);" id="J_Go"  class="submit-btn submit-btn-disabled" aria-label="请注意如果没有选择宝贝，将无法结算">
+                <span class="pay">结&nbsp;算</span></a>
+            </div>
+        </div>
+    </div>
+    <script>
+        // 页面加载完成 
+        $(function(){
+
+            // 传参到结算页面
+            $('.pay').click(function() {
+                arr2=[];
+               
+                $('.bundle-main').find('ul').each(function(){
+                    if ( $(this).find(":checkbox").attr("checked")) {
+                         id1=$(this).find(":checkbox").val();
+                         arr2.push(id1);
+                    }
+                });
+                // alert(arr2)
+                if (arr2.length!==0) {
+                 $('#J_Go').attr('href','/pay/index/id/'+arr2);
+                }else{
+                    alert('请选择商品');
+                }
+            });
+            // 减
+            $('.updatee').click(function(){
+                var id=$(this).attr('name');
+                var o=$(this);
+                // ajax
+                $.get('/cart/updatee',{id:id},function(data){
+                    o.next().val(data.num);
+                    o.parents('li').next().find('em[name="zprice"]').html(data.totl);
+                    if ($('.check-all').attr('checked')) {
+                        qx();
+                    }else{
+                        bf();
+                    } 
+                },'json');
+            });
+            // 加
+            $('.update').click(function(){
+                var id=$(this).attr('name');
+                var o=$(this);
+                // ajax
+                $.get('/cart/update',{id:id},function(data){
+                    o.prev().val(data.num);
+                    o.parents('li').next().find('em[name="zprice"]').html(data.totl);
+                    if ($('.check-all').attr('checked')) {
+                        qx();
+                    }else{
+                        bf();
+                    } 
+                },'json');
+            });
+            // 全选
+            $('.check-all').click(function(){
+                qx();
+            });
+
+            // 全选函数
+            function qx(){
+                var a=0;
+                var b=0;
+                // 判断全选按钮是否选中
+                if ($('.check-all').attr('checked')) {
+                    // 遍历
+                    $(".bundle-main").find("ul").each(function(){
+                        // 全部选中
+                        $(this).find(":checkbox").attr("checked",true);
+                        pr=$(this).find('em[name="zprice"]').html();
+                        // 选中不能取消
+                        $(this).find(":checkbox").attr("disabled",true); 
+                        zpr=parseFloat(pr);
+                        // 全部选中的总价格
+                        a+=zpr; 
+                        // 全部选中个数
+                        b=$('.bundle-main').find('ul').length;
+                    }); 
+                }else{
+                    $(".bundle-main").find("ul").each(function(){
+                        // 全部取消选中
+                        $(this).find(":checkbox").attr("checked",false);
+                        // 可操作
+                        $(this).find(":checkbox").attr("disabled",false);
+                    }); 
+                }
+                   $('.zpr').html(a);
+                   $('.zj').html(b);
+            }
+            //部分选中
+            $('.bundle-main').find('ul').find(":checkbox").click(function(){
+                bf();
+            });
+            // 定义部分函数
+            function bf(){
+                arr=[];
+                var c=0;
+                $('.bundle-main').find('ul').each(function(){
+                    if ( $(this).find(":checkbox").attr("checked")) {
+                        // 为选中
+                         pr=$(this).find('em[name="zprice"]').html();
+                         zpr=parseFloat(pr);
+                         c+=zpr;
+                         id=$(this).find(":checkbox").val();
+                         arr.push(id);
+                         d=arr.length;
+                    }else{
+                         d=arr.length;
+                    }
+                });
+                // alert(arr);
+                $('.zpr').html(c);
+                $('.zj').html(d);
+            }
+
+            // 点击删除选中
+            $('.deleteAll').click(function() {
+                arr1=[];
+                $('.bundle-main').find('ul').each(function(){
+                    if ( $(this).find(":checkbox").attr("checked")) {
+                         id=$(this).find(":checkbox").val();
+                         arr1.push(id);
+                    }
+
+                })
+
+                // alert(arr);
+                // AJAX
+                var qd=confirm('你确定要删除吗？');
+                if (qd==true) { 
+                    $.get('/cart/delall',{arr:arr1},function(data){
+                        console.log(data);
+                        if (data==1) {
+                            // 删除ul
+                            // console.log(arr1);
+                            for(var i=0;i<arr1.length;i++){
+                                $("input[value="+arr1[i]+"]").parents("ul").remove();
+                                // 调用函数
+                                qx();
+                            }
+                        }
+                    });
+                }
+            });
+            
+    })
+        
+        
+        
+    </script>
+    <div class="footer">
+        <div class="footer-hd">
+            <p>
+                <a href="#">恒望科技</a>
+                <b>|</b>
+                <a href="#">商城首页</a>
+                <b>|</b>
+                <a href="#">支付宝</a>
+                <b>|</b>
+                <a href="#">物流</a>
+            </p>
+        </div>
+    </div>
+</div>
+<!--操作页面-->
+<div class="theme-popover-mask"></div>
+<div class="theme-popover">
+    <div class="theme-span"></div>
+    <div class="theme-poptit h-title">
+        <a href="javascript:;" title="关闭" class="close">×</a>
+    </div>
+    <div class="theme-popbod dform">
+        <form class="theme-signin" name="loginform" action="" method="post">
+            <div class="theme-signin-left">
+                <li class="theme-options">
+                    <div class="cart-title">颜色：</div>
+                    <ul>
+                        <li class="sku-line selected">12#川南玛瑙<i></i></li>
+                        <li class="sku-line">10#蜜橘色+17#樱花粉<i></i></li>
+                    </ul>
+                </li>
+                <li class="theme-options">
+                    <div class="cart-title">包装：</div>
+                    <ul>
+                        <li class="sku-line selected">包装：裸装<i></i></li>
+                        <li class="sku-line">两支手袋装（送彩带）<i></i></li>
+                    </ul>
+                </li>
+                <div class="theme-options">
+                    <div class="cart-title number">数量</div>
+                    <dd>
+                        <input class="min am-btn am-btn-default" name="" type="button" value="-" />
+                        <input class="text_box" name="" type="text" value="1" style="width:30px;" />
+                        <input class="add am-btn am-btn-default" name="" type="button" value="+" />
+                        <span  class="tb-hidden">库存<span class="stock">1000</span>件</span>
+                    </dd>
+                </div>
+                <div class="clear"></div>
+                <div class="btn-op">
+                    <div class="btn am-btn am-btn-warning">确认</div>
+                    <div class="btn close am-btn am-btn-warning">取消</div>
+                </div>
+            </div>
+            <div class="theme-signin-right">
+                <div class="img-info">
+                    <img src="/static/index/images/kouhong.jpg_80x80.jpg" />
+                            </div>
+                    <div class="text-info">
+                        <span class="J_Price price-now">¥39.00</span>
+                        <span id="Stock" class="tb-hidden">库存<span class="stock">1000</span>件</span>
+                    </div>
+                </div>
+        </form>
+    </div>
+</div>
+<!--引导 -->
+<div class="navCir">
+    <li><a href="home.html"><i class="am-icon-home "></i>首页</a></li>
+    <li><a href="sort.html"><i class="am-icon-list"></i>分类</a></li>
+    <li class="active"><a href="/cart/index"><i class="am-icon-shopping-basket"></i>购物车</a></li>
+    <li><a href="/static/index/person/index.html"><i class="am-icon-user"></i>我的</a></li>
+</div>
+</body>
+
+</html>
+{/block}

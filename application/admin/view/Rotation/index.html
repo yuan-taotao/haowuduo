@@ -1,0 +1,78 @@
+{extend name="Public/index" /}
+{block name="title"}轮播图列表列表{/block}
+{block name="content"}
+<div class="box-body">
+    <div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="dataTables_length" id="example1_length">
+                    <span>轮播图列表</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <table id="example1" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info" style="text-align:center;">
+                        <thead>
+                            <tr role="row" style="text-align:center;">
+                                <th class="sorting_asc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending" style="width: 126px;text-align:center;">
+                                    <font style="vertical-align: inherit;">
+                                        <font style="vertical-align: inherit;">ID</font>
+                                    </font>
+                                </th>
+                                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" style="width: 156px;text-align:center;">
+                                    <font style="vertical-align: inherit;">
+                                        <font style="vertical-align: inherit;">URL</font>
+                                    </font>
+                                </th>
+                                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" style="width: 126px;text-align:center;">
+                                    <font style="vertical-align: inherit;">
+                                        <font style="vertical-align: inherit;">图片</font>
+                                    </font>
+                                </th>
+                                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" style="width: 206px;text-align:center;">
+                                    <font style="vertical-align: inherit;">
+                                        <font style="vertical-align: inherit;">操作</font>
+                                    </font>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        
+                      {foreach name='list' item='val'}
+                         <tr role="row" class="odd">
+                                <td class="sorting_1">
+                                    <font style="vertical-align: inherit;">
+                                        <font style="vertical-align: inherit;">{$val['id']}</font>
+                                    </font>
+                                </td>
+                                <td>
+                                    <font style="vertical-align: inherit;">
+                                        <font style="vertical-align: inherit;">{$val['url']}</font>
+                                    </font>
+                                </td>
+                                <td>
+                                    <font style="vertical-align: inherit;">
+                                        <font style="vertical-align: inherit;"><img width="50" src="/uploads/{$val['pic']}" alt=""></font>
+                                    </font>
+                                </td>
+                                
+                                <td>
+                                   <a class="btn btn-info" href="/adminrotation/edit/id/{$val['id']}" role="button">修改</a><a class="btn btn-danger" href="/adminrotation/delete/id/{$val['id']}" role="button">删除</a>
+                                </td>
+                            </tr>
+                     {/foreach}
+                           
+                        </tbody> 
+                     }
+                    </table>
+                    <div class="col-sm-12">
+                        <div style="float:right;">
+                         
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {/block}

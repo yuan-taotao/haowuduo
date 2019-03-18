@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="ThemeBucket">
+    <link rel="shortcut icon" href="#" type="image/png">
+    <title>后台登录</title>
+    <link href="/static/admin/login/css/style.css" rel="stylesheet">
+    <link href="/static/admin/login/css/style-responsive.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="/static/admin/login/js/html5shiv.js"></script>
+    <script src="/static/admin/login/js/respond.min.js"></script>
+    <![endif]-->
+    <style>
+        body{
+
+    background-color: #F2F2F2;
+    
+    }
+
+        a{
+            cursor:pointer;
+        }
+
+    </style>
+</head>
+
+<body class="login-body">
+    <div class="container">
+        <form class="form-signin" action="/adminlogin/test" method="post">
+                <div class="form-signin-heading text-center">
+                    <h1 class="sign-title">后台登录</h1>
+                    <img src="/static/admin/login/images/login-logo.png" alt=""/>
+                </div>
+                <div class="login-wrap">
+                    用户名<input type="text" name="username" class="form-control" placeholder="User ID" autofocus>
+                    密码<input type="password" name="pass" class="form-control" placeholder="Password">
+                    <div>
+                        验证码<br>
+                        <img id="yy"src="{:captcha_src()}" alt="" onclick='this.src="{:captcha_src()}?rand="+Math.random()'>看不清？<a onclick='a.src="{:captcha_src()}?rand="+Math.random()'>换一张</a><br>
+                        输入验证码<br>
+                        <input type="text" name="fcode" id="zz">
+                    </div>
+                    <button class="btn btn-lg btn-login btn-block" type="submit">登录</button>
+                </div>
+        </form>
+    </div>
+    <script>
+    var a = document.getElementById('yy');
+    </script>
+
+    <!-- Placed js at the end of the document so the pages load faster -->
+    <!-- Placed js at the end of the document so the pages load faster -->
+    <script src="/static/admin/login/js/jquery-1.10.2.min.js"></script>
+    <script src="/static/admin/login/js/bootstrap.min.js"></script>
+    <script src="/static/admin/login/js/modernizr.min.js"></script>
+</body>
+
+</html>
